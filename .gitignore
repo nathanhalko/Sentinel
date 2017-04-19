@@ -1,0 +1,5 @@
+.idea/*
+.idea/vcs.xml
+target/
+derby.log
+metastore_db/
