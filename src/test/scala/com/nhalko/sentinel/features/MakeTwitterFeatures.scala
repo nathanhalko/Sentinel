@@ -6,10 +6,9 @@ import org.scalatest._
   * Created by nhalko on 4/13/17.
   */
 
-class MakeFeatures extends FlatSpec {
+class MakeTwitterFeatures extends FlatSpec {
 
   "Features" should "run" in {
-//    TextFeature.createTextFeatures()
     TwitterFeature.createTwitterFeatures()
     assert(true)
   }

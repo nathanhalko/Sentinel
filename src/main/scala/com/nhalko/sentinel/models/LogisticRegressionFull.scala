@@ -20,7 +20,7 @@ import com.nhalko.sentinel.util.{Logger, MySparkSession}
   * Extend the basic Model1 with some nice features.
   */
 
-object LogisticRegression extends Logger {
+object LogisticRegressionFull extends Logger {
 
   val savedModel = "data/models/text-feature-logistic-regression-model"
 

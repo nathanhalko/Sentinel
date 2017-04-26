@@ -9,7 +9,9 @@ import org.scalatest._
 class TestRFRExample extends FlatSpec {
 
   "RandomForestRegressorExample" should "run" in {
+
     RandomForestRegressorExample.main(Array.empty[String])
+
     assert(true)
   }
 

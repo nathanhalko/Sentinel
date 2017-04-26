@@ -11,6 +11,7 @@ class TestRFCExample extends FlatSpec {
   "RandomForestClassifierExample" should "run" in {
 
     RandomForestClassifierExample.main(Array.empty[String])
+
     assert(true)
   }
 

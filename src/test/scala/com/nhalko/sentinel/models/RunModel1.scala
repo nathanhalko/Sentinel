@@ -18,7 +18,8 @@ class RunModel1 extends FlatSpec {
 //    Model2.train(spark)
 //    Model3.train(spark)
 
-    RandomForest.predict("nhalko")(spark)
+//    RandomForest.predict("nhalko")(spark)
+    KMeansClustering.train(spark)
 
     spark.stop()
     assert(true)
