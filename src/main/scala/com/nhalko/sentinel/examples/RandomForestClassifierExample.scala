@@ -27,12 +27,20 @@ import org.apache.spark.ml.feature.{IndexToString, StringIndexer, VectorIndexer}
 import org.apache.spark.sql.SparkSession
 
 object RandomForestClassifierExample {
+
   def main(args: Array[String]): Unit = {
     val spark = SparkSession
       .builder
       .master("local[4]")
       .appName("RandomForestClassifierExample")
       .getOrCreate()
+
+    run(spark)
+
+    spark.stop()
+  }
+
+  def run(spark: SparkSession): Unit = {
 
     // $example on$
     // Load and parse the data file, converting it to a DataFrame.
@@ -91,8 +99,6 @@ object RandomForestClassifierExample {
     val rfModel = model.stages(2).asInstanceOf[RandomForestClassificationModel]
     println("Learned classification forest model:\n" + rfModel.toDebugString)
     // $example off$
-
-    spark.stop()
   }
 }
 // scalastyle:on println

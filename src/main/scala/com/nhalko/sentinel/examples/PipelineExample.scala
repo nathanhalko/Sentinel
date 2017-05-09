@@ -38,13 +38,13 @@ object PipelineExample {
     val model = pipeline.fit(training)
 
     // Now we can optionally save the fitted pipeline to disk
-    model.write.overwrite().save("/tmp/spark-logistic-regression-model")
+    model.write.overwrite().save("data/spark-logistic-regression-model")
 
     // We can also save this unfit pipeline to disk
-    pipeline.write.overwrite().save("/tmp/unfit-lr-model")
+    pipeline.write.overwrite().save("data/unfit-lr-model")
 
     // And load it back in during production
-    val sameModel = PipelineModel.load("/tmp/spark-logistic-regression-model")
+    val sameModel = PipelineModel.load("data/spark-logistic-regression-model")
 
     // Prepare test documents, which are unlabeled (id, text) tuples.
     val test = spark.createDataFrame(Seq(
@@ -61,13 +61,6 @@ object PipelineExample {
       .foreach { case Row(id: Long, text: String, prob: Vector, prediction: Double) =>
         println(s"($id, $text) --> prob=$prob, prediction=$prediction")
       }
-
-//    val binarySummary = lr.summary.asInstanceOf[BinaryLogisticRegressionSummary]
-//
-//    // Obtain the receiver-operating characteristic as a dataframe and areaUnderROC.
-//    val roc = binarySummary.roc
-//    roc.show()
-//    println(s"areaUnderROC: ${binarySummary.areaUnderROC}")
   }
 
 }

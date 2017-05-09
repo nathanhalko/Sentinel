@@ -39,5 +39,4 @@ object TextFeature {
     }
       .mkString(" ")
   }
-
 }

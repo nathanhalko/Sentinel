@@ -27,6 +27,7 @@ import org.apache.spark.ml.regression.{RandomForestRegressionModel, RandomForest
 import org.apache.spark.sql.SparkSession
 
 object RandomForestRegressorExample {
+
   def main(args: Array[String]): Unit = {
     val spark = SparkSession
       .builder
@@ -34,6 +35,12 @@ object RandomForestRegressorExample {
       .appName("RandomForestRegressorExample")
       .getOrCreate()
 
+    run(spark)
+
+    spark.stop()
+  }
+
+  def run(spark: SparkSession) {
     // $example on$
     // Load and parse the data file, converting it to a DataFrame.
     val data = spark.read.format("libsvm").load("data/mllib/sample_libsvm_data.txt")
@@ -78,8 +85,6 @@ object RandomForestRegressorExample {
     val rfModel = model.stages(1).asInstanceOf[RandomForestRegressionModel]
     println("Learned regression forest model:\n" + rfModel.toDebugString)
     // $example off$
-
-    spark.stop()
   }
 }
 // scalastyle:on println

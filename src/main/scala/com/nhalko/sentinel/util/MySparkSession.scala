@@ -4,6 +4,10 @@ import org.apache.spark.sql.SparkSession
 
 /**
   * Created by nhalko on 4/13/17.
+  *
+  * Create a SparkSession for use in the scala repl
+  *
+  * > val spark = MySparkSession()
   */
 
 object MySparkSession {

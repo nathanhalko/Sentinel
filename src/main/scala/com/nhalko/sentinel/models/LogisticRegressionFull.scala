@@ -17,7 +17,7 @@ import com.nhalko.sentinel.util.{Logger, MySparkSession}
 /**
   * Created by nhalko on 4/13/17.
   *
-  * Extend the basic Model1 with some nice features.
+  * Extend the basic LogisticRegressionExa with some nice features.
   */
 
 object LogisticRegressionFull extends Logger {
@@ -72,12 +72,12 @@ object LogisticRegressionFull extends Logger {
 
     /**
       *  We use a ParamGridBuilder to construct a grid of parameters to search over.
-      *   With 3 values for hashingTF.numFeatures and 2 values for lr.regParam,
-      *   this grid will have 3 x 2 = 6 parameter settings for CrossValidator to choose from.
+      *   With 4 values for hashingTF.numFeatures and 5 values for lr.regParam,
+      *   this grid will have 4 x 5 = 20 parameter settings for CrossValidator to choose from.
       */
     val paramGrid = new ParamGridBuilder()
       .addGrid(hashingTF.numFeatures, Array(10, 100, 1000, 10000))
-      .addGrid(logisticRegression.regParam, Array(0.1, 0.01, 0.1, 0.25))
+      .addGrid(logisticRegression.regParam, Array(0.1, 0.01, 0.1, 0.25, 0.5))
       .build()
 
     /**
@@ -93,7 +93,7 @@ object LogisticRegressionFull extends Logger {
       .setEstimator(pipeline)
       .setEvaluator(evaluator)
       .setEstimatorParamMaps(paramGrid)
-      .setNumFolds(2)
+      .setNumFolds(5)
 
     // Run cross-validation, and choose the best set of parameters.
     val cvModel = crossValidator.fit(trainingData)
@@ -109,7 +109,7 @@ object LogisticRegressionFull extends Logger {
       */
 
     /**
-      * Save for later, we'll want to predict some unknown stuff with it
+      * Save for later, we'll want to predict some labels with it
       */
     cvModel.write.overwrite().save(savedModel)
 
@@ -145,6 +145,9 @@ object LogisticRegressionFull extends Logger {
   lazy val model = CrossValidatorModel.load(savedModel)
   lazy val twitApi = TwitterFactory.get()
 
+  /**
+    * Predict labels for given twitter handles using the model we trained above.
+    */
   def predict(handle: String)(implicit spark: SparkSession) = {
 
     val normHandle = handle.stripPrefix("@").toLowerCase.trim

@@ -88,29 +88,4 @@ object KMeansClustering extends Logger {
       .transform(data.sample(withReplacement = false, 0.025))
       .select("id", "handle", "prediction", "label").show(100)
   }
-
-
-  lazy implicit val ss = MySparkSession()
-  // make this lazy because it might not exist if we haven't called .train above
-  lazy val model = PipelineModel.load(savedModel)
-
-  def predict(handle: String)(implicit spark: SparkSession) = {
-
-    val featuresFile = TwitterFeature.writeSingeFeatureFile(TwitterFeature.handle2Features(handle))
-    val data = spark.read
-      .option("header", "true")
-      .option("inferSchema", "true")
-      .csv(featuresFile)
-
-    data.show()
-
-    // ToDo: VectorIndexer unhappy with a single row i think
-    //Cause: org.apache.spark.SparkException: Failed to execute user defined function($anonfun$11: (vector) => vector)
-    //Cause: java.util.NoSuchElementException: key not found: 1.0
-
-    model.transform(data)
-      .select("id", "handle", "probability", "prediction", "label")
-      .show(truncate = false)
-  }
-
 }

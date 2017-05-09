@@ -6,6 +6,15 @@ robotic type entities on Twitter.
 
 # Setup
 
+If you have (and are comfortable with) `git`, clone the repo
+
+```
+git clone git@github.com:nathanhalko/Sentinel.git
+cd Sentinel
+```
+
+else, just download and unzip it (green button `Clone or Download`)
+
 ### SBT
 
 An sbt script is included in the project directory.  Enter the
@@ -17,6 +26,8 @@ projectDir> ./sbt
 sbt> testOnly *RunLogisticRegressionExa
 
 sbt> console 
+
+ctrl+d to exit
 ```
 
 We kind of abuse the test framework to just give us a runnable container
@@ -26,9 +37,9 @@ for the learning algorithms, but it works quite nicely.
 
 TwitterCrawler fetches data from the twitter api and stores it in a 
 local [MongoDB](http://mongodb.github.io/mongo-scala-driver/2.0/) instance
-at the default location /data/db. Feature creation then reads from Mongo and
+at the default location `/data/db`. Feature creation then reads from Mongo and
 creates csv files for ingestion by the learning algorithms. These are stored
-in $projectRoot/data.
+in `$projectRoot/data`.
 
 Its possible to run the learning algorithms with just the supplied
 csv files, however if you'd like to get at the source try
@@ -60,3 +71,12 @@ free to use them but realize others might also be hacking away at the rate limit
 | User | [docs](http://twitter4j.org/javadoc/twitter4j/User.html) | [docs](https://dev.twitter.com/rest/reference/get/users/lookup) |
 | Status | [docs](http://twitter4j.org/javadoc/twitter4j/Status.html) | [docs](https://dev.twitter.com/rest/reference/get/statuses/user_timeline) |
 
+
+### Logging
+
+Make the output of the learning scripts a little more interesting by editing
+the root logger level in `src/test/resources/log4j.properties` to INFO.
+
+```
+log4j.rootCategory=INFO, console
+```

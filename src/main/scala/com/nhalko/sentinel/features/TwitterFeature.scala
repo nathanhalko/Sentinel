@@ -9,6 +9,8 @@ import com.nhalko.sentinel.lib.TwitterFactory
 
 /**
   * Created by nhalko on 4/17/17.
+  *
+  * Subset of features described in https://arxiv.org/pdf/1703.03107.pdf
   */
 
 object TwitterFeature {
